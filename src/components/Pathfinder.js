@@ -1,58 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import './Pathfinder.scss';
 import GridNode from './GridNode.js';
 
-const blank = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-];
-
-const gridClone = (blank) => {
-  const clone = []
-  for (let i = 0; i < blank.length; i++) { clone.push(blank[i].slice()) }
-  return clone
-}
-
-export default class Pathfinder extends Component {
-  state = { grid: gridClone(blank) }
-
-  mapNodes = (grid) => {
+export default function Pathfinder(props) {
+  const stateGrid = useSelector(state => state.grid)
+  const stateNewNode = useSelector(state => state.newNode)
+  const mapNodes = () => {
     return (
-      grid.map((row, ri) => {
+      stateGrid.map((row, ri) => {
         return (
           <div className="grid-row" key={`r${ri}`}>
-            {this.mapSingleNode(row, ri)}
+            {row.map((col, ci) => {
+              return <GridNode key={`${ri}-${ci}`} position={`${ri}-${ci}`} />
+            })}
           </div>)
       })
     )
   }
-
-  mapSingleNode = (row, ri) => {
-    return (
-      row.map((col, ci) => {
-        return <GridNode key={`${ri}-${ci}`} row={row} ri={ri} />
-      })
-    )
+  const instructions = () => {
+    switch (stateNewNode) {
+      case 1:
+        return 'Place the starting point';
+      case 2:
+        return 'Place the end point';
+      case 3:
+        return 'Put down any walls you want';
+      default:
+        break;
+    }
   }
 
-  render() {
-    return (
-      <div className="pathfinder">
-        {this.mapNodes(this.state.grid)}
-      </div>
-    )
-  }
+  return (
+    <div className="pathfinder">
+      {mapNodes()}
+      {instructions()}
+    </div>
+  )
 };
