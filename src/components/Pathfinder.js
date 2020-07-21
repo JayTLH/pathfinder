@@ -34,7 +34,9 @@ export default function Pathfinder(props) {
   return (
     <div className="pathfinder">
       {mapNodes()}
-      {instructions()}
+      <div className="pathfinder__instructions">
+        {instructions()}
+      </div>
     </div>
   )
 };

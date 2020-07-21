@@ -32,7 +32,7 @@ const changeArr = (grid, position, value) => {
 };
 
 export default {
-  toggleNode: (state = { grid: blankClone(blank), newNode: 1 }, action) => {
+  toggleNode: (state = { grid: blankClone(blank), newNode: 1, mouseDown: false }, action) => {
     let position;
     if (action.position) { position = action.position.split('-') };
     switch (action.type) {
@@ -46,6 +46,12 @@ export default {
         break;
       case 'toggleWall':
         state.grid = changeArr(state.grid, position, 3);
+        break;
+      case 'mouseDown':
+        state.mouseDown = true;
+        break;
+      case 'mouseUp':
+        state.mouseDown = false;
         break;
       default:
         break;

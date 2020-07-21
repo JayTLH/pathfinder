@@ -7,6 +7,7 @@ export default function GridNode(props) {
   const dispatch = useDispatch();
   const stateGrid = useSelector(state => state.grid);
   const stateNewNode = useSelector(state => state.newNode);
+  const mouseDown = useSelector(state => state.mouseDown);
   const position = props.position.split('-');
   const nodeValue = stateGrid[position[0]][position[1]]
 
@@ -23,30 +24,41 @@ export default function GridNode(props) {
     }
   }
 
-  const toggle = (event) => {
-    switch (stateNewNode) {
-      case 1:
+  const toggleWall = (event, mouse) => {
+    if (!mouseDown) { return };
+    if (stateNewNode === 3) { dispatch(action.toggleWall(props.position)) };
+  }
+
+  const mouseClick = (event) => {
+    if (event.type === 'mousedown') {
+      dispatch(action.mouseDown());
+      if (event.target.value != 0) { return }
+      if (stateNewNode === 1) {
         dispatch(action.toggleStart(props.position));
-        break;
-      case 2:
+      } else if (stateNewNode === 2) {
         dispatch(action.toggleEnd(props.position));
-        break;
-      case 3:
+      } else if (stateNewNode === 3) {
         dispatch(action.toggleWall(props.position));
-        break;
-      default:
-        break;
+      }
+    } else {
+      dispatch(action.mouseUp())
     }
   }
 
-  const createWall = (event) => {
-    console.log(event.type)
-  }
-
   const mapButton = (value) => {
-    if (value) { return <button className={`grid-node ${nodeClass(nodeValue)}`} value={nodeValue} /> }
-    return <button className={`grid-node ${nodeClass(nodeValue)}`} value={nodeValue} onMouseOver={toggle} />
-    // return <button className={`grid-node ${nodeClass(nodeValue)}`} value={nodeValue} onMouseDown={toggle} onMouseOver={toggle} />
+    if (value) {
+      return <button
+        className={`grid-node ${nodeClass(nodeValue)}`}
+        value={nodeValue}
+        onMouseDown={mouseClick}
+        onMouseUp={mouseClick} />
+    }
+    return <button
+      className={`grid-node ${nodeClass(nodeValue)}`}
+      value={nodeValue}
+      onMouseDown={mouseClick}
+      onMouseEnter={toggleWall}
+      onMouseUp={mouseClick} />
   }
 
   return (
