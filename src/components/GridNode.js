@@ -32,7 +32,7 @@ export default function GridNode(props) {
   const mouseClick = (event) => {
     if (event.type === 'mousedown') {
       dispatch(action.mouseDown());
-      if (event.target.value != 0) { return }
+      if (event.target.value !== '0') { return }
       if (stateNewNode === 1) {
         dispatch(action.toggleStart(props.position));
       } else if (stateNewNode === 2) {

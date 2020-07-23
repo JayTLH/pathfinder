@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './Pathfinder.scss';
 import GridNode from './GridNode.js';
+import action from '../redux/action.js';
 
 export default function Pathfinder(props) {
   const stateGrid = useSelector(state => state.grid)
   const stateNewNode = useSelector(state => state.newNode)
+  const dispatch = useDispatch()
   const mapNodes = () => {
     return (
       stateGrid.map((row, ri) => {
@@ -31,11 +33,19 @@ export default function Pathfinder(props) {
     }
   }
 
+  const reset = () => {
+    dispatch(action.resetGrid())
+  }
+
   return (
     <div className="pathfinder">
       {mapNodes()}
       <div className="pathfinder__instructions">
         {instructions()}
+      </div>
+      <div className="pathfinder__control">
+        <button className="pathfinder__button">Start</button>
+        <button className="pathfinder__button" onClick={reset}>Reset</button>
       </div>
     </div>
   )
