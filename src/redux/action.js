@@ -3,7 +3,7 @@ export default {
   toggleEnd: (position) => { return { type: 'toggleEnd', position: position } },
   toggleWall: (position) => { return { type: 'toggleWall', position: position } },
   resetGrid: () => { return { type: 'resetGrid' } },
-  startPath: () => { return { type: 'startPath' } },
   mouseDown: () => { return { type: 'mouseDown' } },
-  mouseUp: () => { return { type: 'mouseUp' } }
+  mouseUp: () => { return { type: 'mouseUp' } },
+  dijkstra: (path) => { return { type: 'dijkstra', path: path } }
 };

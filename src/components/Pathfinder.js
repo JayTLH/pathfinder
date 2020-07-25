@@ -3,16 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import './Pathfinder.scss';
 import GridNode from './GridNode.js';
 import action from '../redux/action.js';
+import { dijkstra, shortestPath } from '../algorithm/dijkstra.js';
 
 export default function Pathfinder(props) {
   const stateGrid = useSelector(state => state.grid)
   const stateNewNode = useSelector(state => state.newNode)
+  const startNode = useSelector(state => state.start)
+  const endNode = useSelector(state => state.end)
   const dispatch = useDispatch()
+
   const mapNodes = () => {
     return (
       stateGrid.map((row, ri) => {
         return (
-          <div className="grid-row" key={`r${ri}`}>
+          <div className="pathfinder__grid-row" key={`r${ri}`}>
             {row.map((col, ci) => {
               return <GridNode key={`${ri}-${ci}`} position={`${ri}-${ci}`} />
             })}
@@ -20,6 +24,7 @@ export default function Pathfinder(props) {
       })
     )
   }
+
   const instructions = () => {
     switch (stateNewNode) {
       case 1:
@@ -33,6 +38,12 @@ export default function Pathfinder(props) {
     }
   }
 
+  const start = () => {
+    if (!startNode && !endNode) { return }
+    dijkstra(stateGrid, startNode, endNode);
+    dispatch(action.dijkstra(shortestPath(endNode)));
+  }
+
   const reset = () => {
     dispatch(action.resetGrid())
   }
@@ -44,7 +55,7 @@ export default function Pathfinder(props) {
         {instructions()}
       </div>
       <div className="pathfinder__control">
-        <button className="pathfinder__button">Start</button>
+        <button className="pathfinder__button" onClick={start}>Start</button>
         <button className="pathfinder__button" onClick={reset}>Reset</button>
       </div>
     </div>

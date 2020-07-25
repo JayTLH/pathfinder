@@ -9,7 +9,7 @@ export default function GridNode(props) {
   const stateNewNode = useSelector(state => state.newNode);
   const mouseDown = useSelector(state => state.mouseDown);
   const position = props.position.split('-');
-  const nodeValue = stateGrid[position[0]][position[1]]
+  const nodeValue = stateGrid[position[0]][position[1]].value
 
   const nodeClass = (value) => {
     switch (value) {
@@ -19,6 +19,8 @@ export default function GridNode(props) {
         return 'node-end';
       case 3:
         return 'node-wall';
+      case 4:
+        return 'node-path';
       default:
         break;
     }

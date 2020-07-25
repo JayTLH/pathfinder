@@ -1,8 +1,9 @@
-.grid-row {
-  height: 34px;
-}
 
 .pathfinder {
+  &__grid-row {
+    height: 34px;
+  }
+
   &__instructions {
   }
 }
