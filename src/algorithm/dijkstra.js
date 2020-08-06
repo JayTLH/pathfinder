@@ -25,6 +25,14 @@ const getNodes = (grid) => {
 
 const sortNodes = (unvisited) => { unvisited.sort((a, b) => a.distance - b.distance) };
 
+const updateNextNodes = (grid, node) => {
+  const unvisited = nextNodes(grid, node);
+  for (const next of unvisited) {
+    next.distance = node.distance + 1;
+    next.previous = node;
+  }
+};
+
 const nextNodes = (grid, node) => {
   const next = [];
   const { row, col } = node;
@@ -33,14 +41,6 @@ const nextNodes = (grid, node) => {
   if (col > 0) { next.push(grid[row][col - 1]) };
   if (col < grid[0].length - 1) { next.push(grid[row][col + 1]) };
   return next.filter(node => !node.visited);
-};
-
-const updateNextNodes = (grid, node) => {
-  const unvisited = nextNodes(grid, node);
-  for (const next of unvisited) {
-    next.distance = node.distance + 1;
-    next.previous = node;
-  }
 };
 
 export function shortestPath(end) {
