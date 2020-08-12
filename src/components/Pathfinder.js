@@ -36,17 +36,28 @@ export default function Pathfinder(props) {
       default:
         break;
     }
-  }
+  };
 
   const start = () => {
     if (!startNode && !endNode) { return }
     dijkstra(stateGrid, startNode, endNode);
-    dispatch(action.dijkstra(shortestPath(endNode)));
-  }
+    const shortest = shortestPath(endNode);
+    let i = 0
+    for (let node of shortest) {
+      i++
+      visualize(node, i)
+    }
+  };
+
+  const visualize = (node, i) => {
+    setTimeout(() => {
+      dispatch(action.dijkstra(node));
+    }, 120 * i);
+  };
 
   const reset = () => {
-    dispatch(action.resetGrid())
-  }
+    dispatch(action.resetGrid());
+  };
 
   return (
     <div className="pathfinder">

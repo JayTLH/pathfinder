@@ -5,24 +5,34 @@
   border: 1px solid black;
   margin: 0;
   outline: none;
+  border-radius: 4px;
 }
 
 .node-start {
   background: green;
+  // animation: fill 0.5s;
 }
 
 .node-end {
   background: red;
+  // animation: fill 0.5s;
 }
 
 .node-wall {
   background: black;
+  // animation: fill 0.5s;
 }
 
 .node-path {
   background: grey;
+  animation: fill 0.5s;
 }
 
 @keyframes fill {
-  // from 
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }

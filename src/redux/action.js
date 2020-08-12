@@ -5,5 +5,5 @@ export default {
   resetGrid: () => { return { type: 'resetGrid' } },
   mouseDown: () => { return { type: 'mouseDown' } },
   mouseUp: () => { return { type: 'mouseUp' } },
-  dijkstra: (path) => { return { type: 'dijkstra', path: path } }
+  dijkstra: (node) => { return { type: 'dijkstra', node: node } }
 };

@@ -45,9 +45,9 @@ export default {
     start: null,
     end: null
   }, action) => {
-    let position, path;
+    let position, node;
     if (action.position) { position = action.position.split('-') };
-    if (action.path) { path = action.path };
+    if (action.node) { node = action.node };
     switch (action.type) {
       case 'toggleStart':
         state.grid = updateGrid(state.grid, position, 1);
@@ -74,11 +74,9 @@ export default {
         state.mouseDown = false;
         break;
       case 'dijkstra':
-        for (const node of path) {
-          if (!node.value) {
-            position = [node.row, node.col]
-            state.grid = updateGrid(state.grid, position, 4)
-          }
+        if (!node.value) {
+          position = [node.row, node.col]
+          state.grid = updateGrid(state.grid, position, 4)
         }
         break;
       default:
