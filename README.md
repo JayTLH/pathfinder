@@ -9,6 +9,5 @@ This app makes use of Redux to manage the state at a global component level.
 The pathfinder algorithm used to find the shortest path is Dijkstra's algorithm which sorts all visited paths to determine the shortest one and allows for weighted paths to take into account traffic, construction sites or other obstructions.
 
 ## Future Updates
-1 - Styling and design.<br/>
-2 - A* and other pathfinder algorithms.<br/>
-3 - Add weighted path node placement.<br/>
+1 - A* and other pathfinder algorithms.<br/>
+2 - Add weighted path node placement.<br/>
