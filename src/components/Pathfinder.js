@@ -28,11 +28,11 @@ export default function Pathfinder(props) {
   const instructions = () => {
     switch (stateNewNode) {
       case 1:
-        return 'Place the starting point';
+        return 'Click on the grid to place a starting point';
       case 2:
-        return 'Place the end point';
+        return 'Click again to place the end point';
       case 3:
-        return 'Put down any walls you want';
+        return 'Click and drag to put down any walls you want and then start the Pathfinder.';
       default:
         break;
     };

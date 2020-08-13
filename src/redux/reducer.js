@@ -67,6 +67,9 @@ export default {
       case 'resetGrid':
         state.grid = blankClone(blank());
         state.newNode = 1
+        state.mouseDown = false
+        state.start = null
+        state.end = null
         break;
       case 'mouseDown':
         state.mouseDown = true;

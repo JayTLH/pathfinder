@@ -10,9 +10,31 @@
   }
 
   &__instructions {
+    margin: 10px 0 0 0;
   }
 
   &__button {
-    margin: 30px;
+    width: 80px;
+    height: 30px;
+    margin: 10px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #353535;
+    border: 1px solid #353535;
+    border-radius: 6px;
+
+    &:hover {
+      transform: scale(1.1);
+      animation: expand 0.2s;
+    }
+  }
+}
+
+@keyframes expand {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
   }
 }
