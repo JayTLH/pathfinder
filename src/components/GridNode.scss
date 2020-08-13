@@ -9,22 +9,27 @@
 }
 
 .node-start {
-  background: green;
+  background: #23F0C7;
   // animation: fill 0.5s;
 }
 
 .node-end {
-  background: red;
+  background: #EF767A;
   // animation: fill 0.5s;
 }
 
 .node-wall {
-  background: black;
+  background: #353535;
   // animation: fill 0.5s;
 }
 
+.node-visited {
+  background: #6457a662;
+  animation: fill 0.5s;
+}
+
 .node-path {
-  background: grey;
+  background: #6457A6;
   animation: fill 0.5s;
 }
 

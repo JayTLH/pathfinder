@@ -20,6 +20,8 @@ export default function GridNode(props) {
       case 3:
         return 'node-wall';
       case 4:
+        return 'node-visited';
+      case 5:
         return 'node-path';
       default:
         break;

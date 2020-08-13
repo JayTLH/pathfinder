@@ -45,9 +45,10 @@ export default {
     start: null,
     end: null
   }, action) => {
-    let position, node;
+    let position, node, value;
     if (action.position) { position = action.position.split('-') };
     if (action.node) { node = action.node };
+    if (action.value) { value = action.value };
     switch (action.type) {
       case 'toggleStart':
         state.grid = updateGrid(state.grid, position, 1);
@@ -76,7 +77,7 @@ export default {
       case 'dijkstra':
         if (!node.value) {
           position = [node.row, node.col]
-          state.grid = updateGrid(state.grid, position, 4)
+          state.grid = updateGrid(state.grid, position, value)
         }
         break;
       default:
