@@ -1,15 +1,15 @@
-export function dijkstra(grid, start, end) {
+const dijkstra = (grid, start, end) => {
   const path = [];
   start.distance = 0;
   const unvisited = getNodes(grid);
   while (!!unvisited.length) {
     sortNodes(unvisited);
     const nextNode = unvisited.shift();
-    if (nextNode.value === 3) { continue }; // checks for walls
+    if (nextNode.value === 3) continue; // checks for walls
     nextNode.visited = true;
-    path.push(nextNode)
-    if (nextNode === end) { return path };
-    updateNextNodes(grid, nextNode)
+    path.push(nextNode);
+    if (nextNode === end) return path;
+    updateNextNodes(grid, nextNode);
   };
 };
 
@@ -23,7 +23,7 @@ const getNodes = (grid) => {
   return nodes;
 };
 
-const sortNodes = (unvisited) => { unvisited.sort((a, b) => a.distance - b.distance) };
+const sortNodes = (unvisited) => unvisited.sort((a, b) => a.distance - b.distance);
 
 const updateNextNodes = (grid, node) => {
   const unvisited = nextNodes(grid, node);
@@ -43,7 +43,7 @@ const nextNodes = (grid, node) => {
   return next.filter(node => !node.visited);
 };
 
-export function shortestPath(end) {
+const shortestPath = (end) => {
   const path = [];
   let curNode = end;
   while (curNode !== null) {
@@ -52,3 +52,5 @@ export function shortestPath(end) {
   }
   return path;
 };
+
+export { dijkstra, shortestPath };

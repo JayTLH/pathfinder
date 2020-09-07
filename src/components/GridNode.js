@@ -44,8 +44,6 @@ export default function GridNode(props) {
       } else if (stateNewNode === 3) {
         dispatch(action.toggleWall(props.position));
       }
-    } else {
-      dispatch(action.mouseUp())
     }
   }
 
@@ -54,15 +52,13 @@ export default function GridNode(props) {
       return <button
         className={`grid-node ${nodeClass(nodeValue)}`}
         value={nodeValue}
-        onMouseDown={mouseClick}
-        onMouseUp={mouseClick} />
+        onMouseDown={mouseClick} />
     }
     return <button
       className={`grid-node ${nodeClass(nodeValue)}`}
       value={nodeValue}
       onMouseDown={mouseClick}
-      onMouseEnter={toggleWall}
-      onMouseUp={mouseClick} />
+      onMouseEnter={toggleWall} />
   }
 
   return (

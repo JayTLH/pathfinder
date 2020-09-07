@@ -64,15 +64,9 @@ export default function Pathfinder(props) {
     };
   };
 
-  const delay = (node, value, i) => {
-    setTimeout(() => {
-      dispatch(action.dijkstra(node, value));
-    }, 70 * i);
-  };
+  const delay = (node, value, i) => setTimeout(() => dispatch(action.dijkstra(node, value)), 70 * i);
 
-  const reset = () => {
-    dispatch(action.resetGrid());
-  };
+  const reset = () => dispatch(action.resetGrid());
 
   return (
     <div className="pathfinder">
