@@ -28,9 +28,9 @@ export default function Pathfinder(props) {
   const instructions = () => {
     switch (stateNewNode) {
       case 1:
-        return 'Click on the grid to place a starting point';
+        return 'Click on the grid to place a starting point.';
       case 2:
-        return 'Click again to place the end point';
+        return 'Click again to place the end point.';
       case 3:
         return 'Click and drag to put down any walls you want and then start the Pathfinder.';
       default:
@@ -39,32 +39,33 @@ export default function Pathfinder(props) {
   };
 
   const start = () => {
-    if (!startNode && !endNode) return;
+    if (!startNode || !endNode) return;
     let i = 0;
     dijkstra(stateGrid, startNode, endNode);
     const shortest = shortestPath(endNode);
-    for (let node of shortest) {
+    const loop = setInterval(() => {
       i++;
-      delay(node, 5, i);
-    };
+      dispatch(action.dijkstra(shortest[i], 5));
+      if (i === shortest.length - 2 || !startNode || !endNode) clearInterval(loop);
+    }, 70);
   };
 
   const visualize = () => {
-    if (!startNode && !endNode) return;
+    if (!startNode || !endNode) return;
     let i = 0;
     const visited = dijkstra(stateGrid, startNode, endNode);
-    for (let node of visited) {
-      i++;
-      delay(node, 4, i);
-    };
     const shortest = shortestPath(endNode);
-    for (let node of shortest) {
+    const nodes = [visited, shortest].flat()
+    const loop = setInterval(() => {
       i++;
-      delay(node, 5, i);
-    };
+      if (i < visited.length) {
+        dispatch(action.dijkstra(nodes[i], 4));
+      } else {
+        dispatch(action.dijkstra(nodes[i], 5));
+      }
+      if (i === nodes.length - 2 || !startNode || !endNode) clearInterval(loop);
+    }, 70);
   };
-
-  const delay = (node, value, i) => setTimeout(() => dispatch(action.dijkstra(node, value)), 70 * i);
 
   const reset = () => dispatch(action.resetGrid());
 

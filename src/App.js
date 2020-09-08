@@ -10,7 +10,6 @@ export default function App(props) {
   const dispatch = useDispatch();
 
   const mouseClick = (event) => {
-    console.log(event.type)
     if (event.type === 'mouseup') dispatch(action.mouseUp());
   }
 

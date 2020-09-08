@@ -29,14 +29,14 @@ export default function GridNode(props) {
   }
 
   const toggleWall = (event, mouse) => {
-    if (!mouseDown) { return };
-    if (stateNewNode === 3) { dispatch(action.toggleWall(props.position)) };
+    if (!mouseDown || !event.target.value) return;
+    if (stateNewNode === 3) dispatch(action.toggleWall(props.position));
   }
 
   const mouseClick = (event) => {
     if (event.type === 'mousedown') {
       dispatch(action.mouseDown());
-      if (event.target.value !== '0') { return }
+      if (event.target.value !== '0') return;
       if (stateNewNode === 1) {
         dispatch(action.toggleStart(props.position));
       } else if (stateNewNode === 2) {
@@ -48,12 +48,6 @@ export default function GridNode(props) {
   }
 
   const mapButton = (value) => {
-    if (value) {
-      return <button
-        className={`grid-node ${nodeClass(nodeValue)}`}
-        value={nodeValue}
-        onMouseDown={mouseClick} />
-    }
     return <button
       className={`grid-node ${nodeClass(nodeValue)}`}
       value={nodeValue}

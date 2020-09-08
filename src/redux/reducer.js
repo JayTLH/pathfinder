@@ -80,7 +80,7 @@ export default {
       case 'dijkstra':
         if (!node.value) {
           position = [node.row, node.col]
-          state.grid = updateGrid(state.grid, position, value)
+          if (state.start && state.end) state.grid = updateGrid(state.grid, position, value)
         }
         break;
       default:
