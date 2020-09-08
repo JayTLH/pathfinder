@@ -48,6 +48,13 @@ export default function Pathfinder(props) {
     const shortest = shortestPath(endNode);
     const loop = setInterval(() => {
       i++;
+
+      if (shortest[i].distance === Infinity) {
+        dispatch(action.inProgress())
+        clearInterval(loop)
+        return alert("No possible path found.")
+      }
+
       dispatch(action.dijkstra(shortest[i], 5));
       if (i >= shortest.length - 1) {
         dispatch(action.inProgress())
@@ -66,11 +73,19 @@ export default function Pathfinder(props) {
     const nodes = [visited, shortest].flat()
     const loop = setInterval(() => {
       i++;
+
+      if (nodes[i].distance === Infinity) {
+        dispatch(action.inProgress())
+        clearInterval(loop)
+        return alert("No possible path found.")
+      }
+
       if (i < visited.length) {
         dispatch(action.dijkstra(nodes[i], 4));
       } else {
         dispatch(action.dijkstra(nodes[i], 5));
       }
+
       if (i >= nodes.length - 1) {
         dispatch(action.inProgress())
         clearInterval(loop)
