@@ -10,6 +10,7 @@ export default function Pathfinder(props) {
   const stateNewNode = useSelector(state => state.newNode);
   const startNode = useSelector(state => state.start);
   const endNode = useSelector(state => state.end);
+  const inProgress = useSelector(state => state.inProgress);
   const dispatch = useDispatch();
 
   const mapNodes = () => {
@@ -40,18 +41,25 @@ export default function Pathfinder(props) {
 
   const start = () => {
     if (!startNode || !endNode) return;
+    if (inProgress) return alert("Path is being found")
+    dispatch(action.inProgress())
     let i = 0;
     dijkstra(stateGrid, startNode, endNode);
     const shortest = shortestPath(endNode);
     const loop = setInterval(() => {
       i++;
       dispatch(action.dijkstra(shortest[i], 5));
-      if (i === shortest.length - 2 || !startNode || !endNode) clearInterval(loop);
+      if (i >= shortest.length - 1) {
+        dispatch(action.inProgress())
+        clearInterval(loop)
+      };
     }, 70);
   };
 
   const visualize = () => {
     if (!startNode || !endNode) return;
+    if (inProgress) return alert("Path is being found.")
+    dispatch(action.inProgress())
     let i = 0;
     const visited = dijkstra(stateGrid, startNode, endNode);
     const shortest = shortestPath(endNode);
@@ -63,11 +71,17 @@ export default function Pathfinder(props) {
       } else {
         dispatch(action.dijkstra(nodes[i], 5));
       }
-      if (i === nodes.length - 2 || !startNode || !endNode) clearInterval(loop);
+      if (i >= nodes.length - 1) {
+        dispatch(action.inProgress())
+        clearInterval(loop)
+      };
     }, 70);
   };
 
-  const reset = () => dispatch(action.resetGrid());
+  const reset = () => {
+    if (inProgress) return alert("Path is being found")
+    dispatch(action.resetGrid())
+  };
 
   return (
     <div className="pathfinder">

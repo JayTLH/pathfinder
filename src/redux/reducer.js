@@ -43,7 +43,8 @@ export default {
     newNode: 1,
     mouseDown: false,
     start: null,
-    end: null
+    end: null,
+    inProgress: false
   }, action) => {
     let position, node, value;
     if (action.position) { position = action.position.split('-') };
@@ -66,10 +67,11 @@ export default {
         break;
       case 'resetGrid':
         state.grid = blankClone(blank());
-        state.newNode = 1
-        state.mouseDown = false
-        state.start = null
-        state.end = null
+        state.newNode = 1;
+        state.mouseDown = false;
+        state.start = null;
+        state.end = null;
+        state.run = false;
         break;
       case 'mouseDown':
         state.mouseDown = true;
@@ -77,10 +79,13 @@ export default {
       case 'mouseUp':
         state.mouseDown = false;
         break;
+      case 'inProgress':
+        state.inProgress = !state.inProgress;
+        break;
       case 'dijkstra':
         if (!node.value) {
-          position = [node.row, node.col]
-          if (state.start && state.end) state.grid = updateGrid(state.grid, position, value)
+          position = [node.row, node.col];
+          state.grid = updateGrid(state.grid, position, value);
         }
         break;
       default:
