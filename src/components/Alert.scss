@@ -1,8 +1,6 @@
 .alert {
   position: absolute;
   top: 150px;
-  // width: 400px;
-  // min-height: 200px;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
@@ -11,17 +9,32 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  animation: drop ease-out 0.5s;
 
   &__header {
     margin: 5px;
   }
 }
 
+.alert-rise {
+  top: -200px;
+  animation: rise ease-out 0.5s;
+}
+
 @keyframes drop {
   from {
-    transform: scale(0);
+    top: -200px;
   }
   to {
-    transform: scale(1);
+    top: 150px;
+  }
+}
+
+@keyframes rise {
+  from {
+    top: 150px;
+  }
+  to {
+    top: -200px;
   }
 }

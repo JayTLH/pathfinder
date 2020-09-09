@@ -113,6 +113,7 @@ export default function Pathfinder(props) {
 
   const dropAlert = (msg) => {
     dispatch(action.alertModal(msg));
+    setTimeout(() => dispatch(action.alertRise()), 2500);
     setTimeout(() => dispatch(action.alertModal()), 3000);
   };
 
