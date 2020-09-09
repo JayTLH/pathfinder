@@ -4,6 +4,7 @@ import './Pathfinder.scss';
 import GridNode from './GridNode.js';
 import action from '../redux/action.js';
 import { dijkstra, shortestPath } from '../algorithm/dijkstra.js';
+import Alert from './Alert.js';
 
 export default function Pathfinder(props) {
   const stateGrid = useSelector(state => state.grid);
@@ -11,6 +12,8 @@ export default function Pathfinder(props) {
   const startNode = useSelector(state => state.start);
   const endNode = useSelector(state => state.end);
   const inProgress = useSelector(state => state.inProgress);
+  const alertModal = useSelector(state => state.alertModal);
+  const alertMsg = useSelector(state => state.alertMsg);
   const dispatch = useDispatch();
 
   const mapNodes = () => {
@@ -41,7 +44,10 @@ export default function Pathfinder(props) {
 
   const start = () => {
     if (!startNode || !endNode) return;
-    if (inProgress) return alert("Path is being found")
+    if (inProgress) {
+      if (!alertModal) return dropAlert('Pathfinder in progress.');
+      return
+    }
     dispatch(action.inProgress())
     let i = 0;
     dijkstra(stateGrid, startNode, endNode);
@@ -52,7 +58,8 @@ export default function Pathfinder(props) {
       if (shortest[i].distance === Infinity) {
         dispatch(action.inProgress())
         clearInterval(loop)
-        return alert("No possible path found.")
+        if (!alertModal) return dropAlert('No possible path found.')
+        return;
       }
 
       dispatch(action.dijkstra(shortest[i], 5));
@@ -65,7 +72,10 @@ export default function Pathfinder(props) {
 
   const visualize = () => {
     if (!startNode || !endNode) return;
-    if (inProgress) return alert("Path is being found.")
+    if (inProgress) {
+      if (!alertModal) return dropAlert('Pathfinder in progress.');
+      return;
+    }
     dispatch(action.inProgress())
     let i = 0;
     const visited = dijkstra(stateGrid, startNode, endNode);
@@ -77,7 +87,7 @@ export default function Pathfinder(props) {
       if (nodes[i].distance === Infinity) {
         dispatch(action.inProgress())
         clearInterval(loop)
-        return alert("No possible path found.")
+        return alert('No possible path found.')
       }
 
       if (i < visited.length) {
@@ -94,8 +104,16 @@ export default function Pathfinder(props) {
   };
 
   const reset = () => {
-    if (inProgress) return alert("Path is being found")
+    if (inProgress) {
+      if (!alertModal) return dropAlert('Pathfinder in progress.');
+      return
+    }
     dispatch(action.resetGrid())
+  };
+
+  const dropAlert = (msg) => {
+    dispatch(action.alertModal(msg));
+    setTimeout(() => dispatch(action.alertModal()), 3000);
   };
 
   return (
@@ -109,6 +127,7 @@ export default function Pathfinder(props) {
         <button className="pathfinder__button" onClick={visualize}>Visualize</button>
         <button className="pathfinder__button" onClick={reset}>Reset</button>
       </div>
+      {alertModal ? <Alert alertMsg={alertMsg} /> : null}
     </div>
   );
 };

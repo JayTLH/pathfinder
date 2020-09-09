@@ -1,0 +1,27 @@
+.alert {
+  position: absolute;
+  top: 150px;
+  // width: 400px;
+  // min-height: 200px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #5e5e5e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__header {
+    margin: 5px;
+  }
+}
+
+@keyframes drop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}

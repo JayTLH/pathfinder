@@ -44,7 +44,9 @@ export default {
     mouseDown: false,
     start: null,
     end: null,
-    inProgress: false
+    inProgress: false,
+    alertModal: false,
+    alertMsg: ''
   }, action) => {
     let position, node, value;
     if (action.position) { position = action.position.split('-') };
@@ -81,6 +83,10 @@ export default {
         break;
       case 'inProgress':
         state.inProgress = !state.inProgress;
+        break;
+      case 'alertModal':
+        state.alertModal = !state.alertModal;
+        if (value) state.alertMsg = value;
         break;
       case 'dijkstra':
         if (!node.value) {

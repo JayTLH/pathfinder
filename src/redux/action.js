@@ -6,5 +6,6 @@ export default {
   mouseDown: () => { return { type: 'mouseDown' } },
   mouseUp: () => { return { type: 'mouseUp' } },
   inProgress: () => { return { type: 'inProgress' } },
+  alertModal: (msg) => { return { type: 'alertModal', value: msg } },
   dijkstra: (node, value) => { return { type: 'dijkstra', node: node, value: value } }
 };
