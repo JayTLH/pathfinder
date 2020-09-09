@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: drop ease-out 0.5s;
+  animation: drop ease-out 0.3s;
 
   &__header {
     margin: 5px;
@@ -18,7 +18,7 @@
 
 .alert-rise {
   top: -200px;
-  animation: rise ease-out 0.5s;
+  animation: rise ease-in 0.3s;
 }
 
 @keyframes drop {
